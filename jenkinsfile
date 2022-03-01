@@ -1,0 +1,23 @@
+pipeline {
+
+    agent any
+    stages {
+   
+        stage('Build') {
+	steps{
+            withMaven {
+              sh 'mvn clean package'   
+            }
+	    }
+        }                        
+        stage('SonarQube analysis') {
+            steps {
+		withSonarQubeEnv('sonarqube-8.9.2') {
+		sh 'mvn sonar:sonar'
+		}
+            }
+        }
+
+   	}
+}
+
