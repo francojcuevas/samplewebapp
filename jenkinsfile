@@ -5,6 +5,13 @@ pipeline {
       maven 'maven' 
     }
     stages {
+     stage('Checkout Code')
+    {
+        steps{
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'githubaccess', url: 'https://github.com/francojcuevas/samplewebapp']]])
+        //workspace= pwd()
+        }
+    }
         stage('Build') {
 	steps{
               sh 'mvn clean package'   
